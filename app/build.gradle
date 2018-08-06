@@ -1,0 +1,54 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.eunsue.luck.event"
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+
+    productFlavors{
+        demo{
+            dimension "app"
+            applicationIdSuffix ".demo" //applicationId 뒤에 각각 "demo/full 의 아이디가 추가로 붙게됨
+            versionCode 1
+            versionName "1.0.0"
+            buildConfigField("boolean", "IS_DEMO", "true") // 소스코드 if(BuildConfig.IS_DEMO) { 데모 버전 } else { 풀 버전 } 으로 사용 가능
+            manifestPlaceholders = [appLabel: "Tarot(demo)"] // 각각 앱 이름 다르게 설정 후 Manifest 에 android:label = "${appLabel}" 변수를 넣어주면 됨
+            /*
+            앱 아이콘을 다르게 설정하고 싶은 경우
+            Flavors를 사용할 시 폴더가 demo, full이 생기게 되는데
+            이 폴더의 res 폴더의 mipmap-xxxhdpi 폴더 안에 그에 맞는 앱 아이콘을 넣어주면 된다
+             */
+        }
+        full{
+            dimension "app"
+            applicationIdSuffix ".full"
+            versionCode 2
+            versionName "1.0.1"
+            buildConfigField("boolean", "IS_DEMO", "false")
+            manifestPlaceholders = [appLabel: "Tarot(full)"]
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
