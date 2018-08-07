@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
 
         if(BuildConfig.IS_DEMO) {
             //데모 버전
+            TextView textView = (TextView)findViewById(R.id.textView);
+            textView.setText("숫자를 입력하세요(1~4)");
             button1.setVisibility(View.INVISIBLE);
             button2.setVisibility(View.INVISIBLE);
             button3.setVisibility(View.INVISIBLE);
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements TextView.OnEditor
     public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
         switch(v.getId()){
             case R.id.editText:
-                setEvent(event2, Integer.valueOf(v.getText().toString()));
+                setEvent(event2, Integer.valueOf(v.getText().toString()) - 1);
         }
         return false;
     }
